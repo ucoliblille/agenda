@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Agenda UCL Lille</title>
+        <link href="styles.css" rel="stylesheet">
+        <script type="text/javascript" src="events.js"></script>
+        <script type="text/javascript" src="lib.js"></script>
+    </head>
+    <body>
+        <div id="calendar-container">
+            <div id="calendar-header">
+                <div>
+                    <label for="selection-mois"></label>
+                    <select id="selection-mois" name="selection-mois">
+                        <option value="0">Janvier</option>
+                        <option value="1">Février</option>
+                        <option value="2">Mars</option>
+                        <option value="3">Avril</option>
+                        <option value="4">Mai</option>
+                        <option value="5">Juin</option>
+                        <option value="6">Juillet</option>
+                        <option value="7">Août</option>
+                        <option value="8">Septembre</option>
+                        <option value="9">Octobre</option>
+                        <option value="10">Novembre</option>
+                        <option value="11">Décembre</option>
+                    </select>
+                </div>
+                <p id="annee"></p>
+            </div>
+            <div id="calendar">
+                <span class="day-name">LUN</span>
+                <span class="day-name">MAR</span>
+                <span class="day-name">MER</span>
+                <span class="day-name">JEU</span>
+                <span class="day-name">VEN</span>
+                <span class="day-name">SAM</span>
+                <span class="day-name">DIM</span>
+            </div>
+        </div>
+        <div id="pop-up" class="hidden">
+            <h3 id="titre"></h3>
+            <div>
+                <section>
+                    <span>🕘</span>
+                    <div>
+                        <p id="date"></p>
+                        <p id="heure"></p>
+                    </div>
+                </section>
+                <section>
+                    <span>📌</span>
+                    <p id="lieu"></p>
+                </section>
+                <section>
+                    <span>👥</span>
+                    <p id="qui"></p>
+                </section>
+                <section>
+                    <span>≣</span>
+                    <p id="description"></p>
+                </section>
+            </div>
+        </div>
+        <script>init()</script>
+    </body>
+</html>
