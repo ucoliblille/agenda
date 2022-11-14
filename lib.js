@@ -13,16 +13,38 @@ document.getRootNode().addEventListener("click", e => {
 })
 
 
-function Evenement(nom, qui, description, lieu, annee, mois, jourDebut, heureDebut, minuteDebut, jourFin, heureFin, minuteFin){
+/**
+ * @param {string} nom
+ * @param {string} qui
+ * @param {string} description
+ * @param {string} lieu
+ * @param {number} annee
+ * @param {number} mois
+ * @param {string} type
+ * @param {number} jourDebut
+ * @param {number} heureDebut
+ * @param {number} minuteDebut
+ * @param {number} jourFin
+ * @param {number} heureFin
+ * @param {number} minuteFin
+ */
+function Evenement(nom, qui, description, lieu, annee, mois, type, jourDebut, heureDebut, minuteDebut, jourFin, heureFin, minuteFin){
     this.nom = nom;
     this.qui = qui;
     this.description = description;
     this.lieu = lieu;
+    this.type = type;
     this.dateDebut = new Date(annee, mois, jourDebut, heureDebut, minuteDebut);
     if(!!jourFin){
         this.dateFin = new Date(annee, mois, jourFin, heureFin, minuteFin);
     }
 }
+
+/**
+ * @param {number} mois
+ * @param {number} numero
+ * @param {HTMLElement[]} evenements
+ */
 function Jour(mois, numero, evenements = []){
     this.numero = numero;
     this.moisChoisi = moisChoisi === mois;
@@ -44,7 +66,11 @@ function actualiserJours(){
         const {numero, moisChoisi, evenements} = totalJours[j];
         const el = jourElem(numero);
         if(!moisChoisi) el.classList.add("day--disabled");
-        evenements.forEach(evenementEl => el.appendChild(evenementEl))
+        const div = document.createElement("div");
+        evenements.forEach(evenementEl => {
+            div.appendChild(evenementEl)
+        })
+        el.appendChild(div);
         gridCalendrier.appendChild(el);
     }
 }
@@ -171,7 +197,7 @@ function joursMoisSuivant(){
  */
 function evenementsFactory(){
     return data.filter(e => e.annee === anneeActuel)
-        .map(e => new Evenement(e.nom, e.qui, e.description, e.lieu, e.annee, e.mois - 1, e.jourDebut, e.heureDebut, e.minuteDebut, e.jourFin, e.heureFin, e.minuteFin))
+        .map(e => new Evenement(e.nom, e.qui, e.description, e.lieu, e.annee, e.mois - 1, e.type, e.jourDebut, e.heureDebut, e.minuteDebut, e.jourFin, e.heureFin, e.minuteFin))
 }
 
 /**
@@ -182,7 +208,7 @@ function evenementsFactory(){
  */
 function creerEvenement(e, jour){
     const evenement = document.createElement("section");
-    evenement.classList.add("task", "task--ucl");
+    evenement.classList.add("task", e.type);
     evenement.innerText = e.nom;
 
     if(e.dateDebut.getDate() === jour){
@@ -224,5 +250,4 @@ function togglePopupVisibilite(e){
 function formatHeure(date){
     return `${date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes()}`
 }
-
 

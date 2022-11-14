@@ -67,7 +67,10 @@ body {
     box-sizing: border-box;
     color: #98a0a6;
     position: relative;
+}
+.day > div {
     overflow-y: scroll;
+    height: 80%;
 }
 .day h5 {
     position: relative;
@@ -130,7 +133,7 @@ body {
 }
 
 .task {
-    padding: 6px 0 6px 6px;
+    padding: 6px;
     margin: 1px 0;
     font-size: 17px;
     position: relative;
@@ -139,6 +142,11 @@ body {
     white-space: nowrap;
     overflow-x: hidden;
 }
+.task:hover {
+    white-space: normal;
+    text-overflow: unset;
+    word-break: break-all;
+}
 .start {
     border-left-width: 4px;
     border-left-style: solid;
@@ -146,9 +154,48 @@ body {
 .task:hover {
     cursor: pointer;
 }
-.task--ucl{
+.ucl{
     background-color: var(--rouge-ucl);
     border-left-color: black;
+    color: white;
+}
+
+.lgbti {
+    background: linear-gradient(
+            90deg,
+            #d81124 0%,
+            #e47401 20%,
+            #ffff01 40%,
+            #028343 60%,
+            #000092 80%,
+            #700272 100%
+    );
+    border-left-color: #700272;
+    color: #2c2c2c;
+    font-weight: bold;
+}
+
+.transidentitee {
+    background-color: #f5a8b8;
+    border-left-color: #5bcefa;
+    color: white;
+}
+
+.antifa {
+    background: linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, var(--rouge-ucl) 100%);
+    border-left-color: black;
+    color: white;
+}
+
+.ecologie {
+    background-color: #3fa73c;
+    border-left-color: black;
+    color: white;
+}
+
+.feminisme {
+    background-color: #591978;
+    border-left-color: #d8c4e6;
     color: white;
 }
 
@@ -163,7 +210,7 @@ body {
     border: 1px solid rgba(166, 168, 179, 0.2);
     width: 400px;
     left: calc(50% - 200px);
-    top: 30%;
+    top: 20%;
     background-color: white;
     box-sizing: border-box;
     border-radius: 4px;
@@ -193,6 +240,7 @@ body {
 #description {
     overflow-y: auto;
     max-height: 300px;
+    padding-right: 10px;
 }
 #pop-up:before {
     border-bottom-color: rgba(166, 168, 179, 0.2);
