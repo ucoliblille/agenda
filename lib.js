@@ -17,6 +17,7 @@ document.getRootNode().addEventListener("click", e => {
  * @param {string} nom
  * @param {string} qui
  * @param {string} description
+ * @param {string} lien
  * @param {string} lieu
  * @param {number} annee
  * @param {number} mois
@@ -28,10 +29,11 @@ document.getRootNode().addEventListener("click", e => {
  * @param {number} heureFin
  * @param {number} minuteFin
  */
-function Evenement(nom, qui, description, lieu, annee, mois, type, jourDebut, heureDebut, minuteDebut, jourFin, heureFin, minuteFin){
+function Evenement(nom, qui, description, lien, lieu, annee, mois, type, jourDebut, heureDebut, minuteDebut, jourFin, heureFin, minuteFin){
     this.nom = nom;
     this.qui = qui;
     this.description = description;
+    this.lien = lien;
     this.lieu = lieu;
     this.type = type;
     this.dateDebut = new Date(annee, mois, jourDebut, heureDebut, minuteDebut);
@@ -66,6 +68,7 @@ function actualiserJours(){
         const {numero, moisChoisi, evenements} = totalJours[j];
         const el = jourElem(numero);
         if(!moisChoisi) el.classList.add("day--disabled");
+        if(numero === new Date().getDate()) el.classList.add("day--current")
         const div = document.createElement("div");
         evenements.forEach(evenementEl => {
             div.appendChild(evenementEl)
@@ -127,7 +130,7 @@ function genererEvenementsMoisChoisi() {
     evenementsTries.sort((a, b) => a.dateDebut - b.dateDebut)
     evenementsTries.forEach(e => {
             const premierJour = e.dateDebut.getDate();
-            const dernierJour = e.dateFin.getDate();
+            const dernierJour = (e.dateFin || e.dateDebut).getDate();
             const values = map.get(premierJour) || [];
             values.push(creerEvenement(e, premierJour));
             map.set(premierJour, values);
@@ -197,7 +200,7 @@ function joursMoisSuivant(){
  */
 function evenementsFactory(){
     return data.filter(e => e.annee === anneeActuel)
-        .map(e => new Evenement(e.nom, e.qui, e.description, e.lieu, e.annee, e.mois - 1, e.type, e.jourDebut, e.heureDebut, e.minuteDebut, e.jourFin, e.heureFin, e.minuteFin))
+        .map(e => new Evenement(e.nom, e.qui, e.description, e.lien, e.lieu, e.annee, e.mois - 1, e.type, e.jourDebut, e.heureDebut, e.minuteDebut, e.jourFin, e.heureFin, e.minuteFin))
 }
 
 /**
@@ -224,13 +227,16 @@ function creerEvenement(e, jour){
  * @param {Evenement} e
  */
 function remplirPopup(e){
-   document.getElementById("titre").innerText = e.nom;
-   document.getElementById("date").innerText = e.dateDebut.toLocaleDateString() + " - " + e.dateFin.toLocaleDateString();
-   const heureFin = !!e.dateFin && ` - ${formatHeure(e.dateFin)}`;
-   document.getElementById("heure").innerText = formatHeure(e.dateDebut) + heureFin;
-   document.getElementById("lieu").innerText = e.lieu;
-   document.getElementById("qui").innerText = e.qui;
-   document.getElementById("description").innerText = e.description;
+    const title = document.getElementById("titre");
+    console.log(e)
+    if(!!e.lien) title.parentElement.href = e.lien;
+    document.getElementById("titre").innerText = e.nom;
+    document.getElementById("date").innerText = e.dateDebut.toLocaleDateString() + (!!e.dateFin ? " - " + e.dateFin.toLocaleDateString() : '');
+    const heureFin = !!e.dateFin ? ` - ${formatHeure(e.dateFin)}` : '';
+    document.getElementById("heure").innerText = formatHeure(e.dateDebut) + heureFin;
+    document.getElementById("lieu").innerText = e.lieu;
+    document.getElementById("qui").innerText = e.qui;
+    document.getElementById("description").innerText = e.description;
 }
 
 /**
