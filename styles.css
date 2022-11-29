@@ -148,12 +148,13 @@ body {
     white-space: normal;
     text-overflow: unset;
     word-break: break-all;
+    hyphens: manual;
 }
 .start {
     border-left-width: 4px;
     border-left-style: solid;
 }
-.task:hover {
+.clickable:hover {
     cursor: pointer;
 }
 .ucl{
@@ -177,7 +178,7 @@ body {
     font-weight: bold;
 }
 
-.transidentitee {
+.transidentite {
     background-color: #f5a8b8;
     border-left-color: #5bcefa;
     color: white;
@@ -207,36 +208,38 @@ body {
 .hidden {
     display: none;
 }
-#pop-up {
+.pop-up {
     position: absolute;
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    z-index: 0;
+}
+#pop-up-event {
     border: 1px solid rgba(166, 168, 179, 0.2);
     width: 400px;
     left: calc(50% - 200px);
     top: 20%;
-    background-color: white;
-    box-sizing: border-box;
-    border-radius: 4px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-    z-index: 0;
 }
-#pop-up h3 {
+#pop-up-event h3 {
     margin: 12px 15px;
 }
-#pop-up > div {
+#pop-up-event > div {
     padding: 0 40px 24px 40px;
 }
-#pop-up section {
+#pop-up-event section {
     display: flex;
     align-items: center;
     margin: 10px 0;
 }
-#pop-up section > span {
+#pop-up-event section > span {
     align-self: flex-start;
 }
-#pop-up section > span {
+#pop-up-event section > span {
     margin-right: 10px;
 }
-#pop-up p {
+#pop-up-event p {
     margin: 0;
 }
 #description {
@@ -244,17 +247,106 @@ body {
     max-height: 300px;
     padding-right: 10px;
 }
-#pop-up:before {
+#pop-up-event:before {
     border-bottom-color: rgba(166, 168, 179, 0.2);
     border-width: 8px;
     margin-left: -8px;
 }
-#pop-up:after {
+#pop-up-event:after {
     border-bottom-color: #fff;
     border-width: 6px;
     margin-left: -6px;
 }
+#tools-button {
+    position: absolute;
+    top: 0;
+    right:0;
+    margin: 10px;
+    font-size: 2rem;
+}
+#pop-up-tools {
+    position: absolute;
+    top: calc(50% - calc(735px /2));
+    padding: 2rem;
+    left: calc(50% - (548px / 2));
+    z-index: 0;
+    background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    color: white;
+}
+#json-form {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 4rem;
+}
+#json-form > input,
+#json-form > textarea,
+#json-form > select {
+    margin-bottom: 1rem;
+    min-width: 20rem;
+    min-height: 2rem;
+    padding: 0 1rem;
+    border-radius: 5px;
+    text-overflow: ellipsis;
+}
+#json-form > textarea {
+    min-height: 4rem;
+    padding: 1rem;
+}
+#submit-generate-json > button[type="submit"] {
+    padding: 5px;
+}
+#submit-generate-json {
+    align-self: center;
+}
+.tooltip::after {
+    position: absolute;
+    padding: 4px 10px;
+    background-color: hsl(0, 0%, 30%);
+    border-radius: 3px;
+    margin: 0 10px;
+    color: white;
+}
+.copied::after {
+    content: "copié";
+}
+#display-event-text-popup {
+    top: calc(50% - (calc(8rem + 8rem + 50vh) / 2));
+    left: calc(50% - ((8rem + 20rem + 11rem) / 2));
+    white-space:pre;
+    padding: 4rem;
+    position: absolute;
+    background-color: hsl(0, 0%, 95%);
+}
+#json-container {
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+            inset 5px 5px 12px  hsl(0, 0%, 70%),
+            inset -5px -5px 12px hsl(0, 0%, 70%);
+    background-color: white;
+    border-radius: 3px;
+    padding: 4rem 7rem 4rem 4rem;
+    max-height: 50vh;
+    overflow-y: scroll;
+}
 
+#json-container > span {
+    word-break: break-word;
+}
+
+.json-pair{
+    white-space: break-spaces;
+    margin-left: 50px;
+    max-width: 20rem;
+}
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    user-select: none;
+    z-index: 0;
+}
 @media only screen and (max-width: 600px){
     body {
         padding: 0;
@@ -263,6 +355,7 @@ body {
     #calendar-container {
         margin: 0;
         width: 100%;
+        height: 100%;
     }
     #calendar {
         grid-template-columns: repeat(7, minmax(50px, 1fr));
@@ -274,6 +367,31 @@ body {
     .day > div {
         overflow-y: scroll;
         height: 75%;
+    }
+    #pop-up-event {
+        top: calc(50% - calc(562px / 2));
+    }
+    #pop-up-tools {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    #display-event-text-popup {
+        padding: 2rem;
+        top:0;
+        left: 0;
+        height: 100%;
+    }
+    #json-container {
+        padding: 1rem 1.5rem 1rem 1rem;
+        max-height: 100%;
+    }
+    #json-form > input,
+    #json-form > textarea,
+    #json-form > select {
+        min-width: 8rem;
+        min-height: 1.3rem;
     }
 }
 @media only screen and (min-width: 601px) and (max-width: 950px){

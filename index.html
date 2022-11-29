@@ -7,9 +7,13 @@
         <link rel="icon" type="image/x-icon" href="https://www.unioncommunistelibertaire.org/favicon.ico">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script type="text/javascript" src="events.js"></script>
-        <script type="text/javascript" src="lib.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+        <script type="text/javascript" src="calendar.js"></script>
+        <script src="https://unpkg.com/rxjs@^7.2/dist/bundles/rxjs.umd.min.js"></script>
+        <script type="text/javascript" src="format-event.js"></script>
     </head>
     <body>
+        <div id="tools-button" class="clickable">⚙</div>
         <div id="calendar-container">
             <div id="calendar-header">
                 <div>
@@ -41,11 +45,12 @@
                 <span class="day-name">DIM</span>
             </div>
         </div>
-        <div id="pop-up" class="hidden">
-            <a><h3 id="titre"></h3></a>
+        <div id="pop-up-event" class="hidden pop-up">
+            <span class="clickable close-popup">✖</span>
+            <h3 id="titre"></h3>
             <div>
                 <section>
-                    <span>🕘</span>
+                    <span>⏰</span>
                     <div>
                         <p id="date"></p>
                         <p id="heure"></p>
@@ -54,6 +59,10 @@
                 <section>
                     <span>📌</span>
                     <p id="lieu"></p>
+                </section>
+                <section>
+                    <span>🔗</span>
+                    <p id="link"></p>
                 </section>
                 <section>
                     <span>👥</span>
@@ -65,6 +74,39 @@
                 </section>
             </div>
         </div>
-        <script>init()</script>
+        <div id="pop-up-tools" class="hidden pop-up">
+            <span class="clickable close-popup">✖</span>
+            <div>
+                <form id="json-form">
+                    <label for="input-name">Nom</label>
+                    <input type="text" id="input-name" required>
+                    <label for="input-who">Qui</label>
+                    <input type="text" id="input-who" required>
+                    <label for="input-where">Lieu</label>
+                    <input type="text" id="input-where" required>
+                    <label for="input-link">Lien</label>
+                    <input type="text" id="input-link">
+                    <label for="input-type">Type</label>
+                    <select id="input-type" required>
+                        <option value="ecologie">écologie</option>
+                        <option value="transidentite">trans-identité</option>
+                        <option value="lgbti">LGBTI</option>
+                        <option value="ucl">UCL</option>
+                        <option value="antifa">antifa</option>
+                        <option value="feminisme">féminisme</option>
+                    </select>
+                    <label for="input-description">Description</label>
+                    <textarea id="input-description"></textarea>
+                    <label for="input-start-date">Début</label>
+                    <input type="datetime-local" id="input-start-date" required>
+                     <label for="input-end-date">Fin</label>
+                    <input type="datetime-local" id="input-end-date">
+                    <div id="submit-generate-json" class="tooltip">
+                        <button type="submit">Copier dans le presse-papier</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>main()</script>
     </body>
 </html>
