@@ -62,11 +62,12 @@ function decoupeTexte(text){
     return text;
 }
 function initTool(){
+    const popupTools = document.getElementById("pop-up-tools");
     document.getElementById("tools-button")
         .addEventListener(
             "click", e => {
                 e.stopPropagation();
-                toggleVisibilite(document.getElementById("pop-up-tools"), true);
+                toggleVisibilite(popupTools, popupTools.classList.contains("hidden"));
             }
         );
     document.getElementById("json-form")
@@ -82,7 +83,7 @@ function initTool(){
                 type: e.target["input-type"].value,
                 description: e.target["input-description"].value,
                 annee: dateDebut.getFullYear(),
-                mois: dateDebut.getMonth(),
+                mois: dateDebut.getMonth() + 1,
                 jourDebut: dateDebut.getDate(),
                 heureDebut: dateDebut.getHours(),
                 minuteDebut: dateDebut.getMinutes()

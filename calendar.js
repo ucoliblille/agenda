@@ -52,6 +52,11 @@ function initCalendar(){
     selectionMoisEl.value = moisActuel;
     document.getElementById("pop-up-event").addEventListener("click", e => e.stopPropagation())
     document.getElementById("annee").innerText = anneeActuel + '';
+    const dateFinEl = document.getElementById("input-end-date");
+    document.getElementById("input-start-date")
+        .addEventListener("change", e => {
+            dateFinEl.setAttribute("min", e.target.value);
+        })
     actualiserJours();
 }
 function actualiserJours(){
